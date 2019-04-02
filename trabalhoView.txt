@@ -1,0 +1,46 @@
+/* Exercicio 1*/
+
+CREATE VIEW remedioAnimal AS
+select a.nome,r.nome as remedio,r.preco from tratamento join consulta using(idconsulta) join animal a using(idanimal) 
+join remediosprodutos r using(idremedioproduto)
+
+select * from remedioAnimal
+
+/*Exercicio 2*/
+
+insert into consulta values(4,3,'15:00','2019-03-12','Vacinas')
+
+CREATE VIEW veterinariosAnimal as
+select p.nome veterinario,a.nome,hora,datacons from consulta join pessoas p using(idpessoa) join animal a using(idanimal) 
+join veterinarios v using(idpessoa)
+where p.idpessoa=v.idpessoa
+
+select * from veterinarioAnimal
+
+/* Exercicio 3 */
+CREATE VIEW agendaConsulta as
+select p.nome dono,a.nome,hora,datacons from consulta join pessoas p using(idpessoa) join animal a using(idanimal) 
+
+select * from agendaConsulta
+
+/* Exercicio 4 */
+CREATE VIEW servicoAnimais as
+select a.nome,p.nome as dono,s.descricao,datasolicitacao,hora,s.valor from solicita join pessoas p using(idpessoa)
+join animal a using(idanimal) join servicos s using(idservico)
+
+select * from servicoAnimais
+
+/* Exercicio 5*/
+
+CREATE VIEW dataRemedio as
+select r.nome,c.datacons from tratamento join remediosprodutos r using(idremedioproduto) join consulta c using(idconsulta)
+
+select * from dataRemedio
+
+
+/* Exercicio 6 */
+
+CREATE VIEW remedios_nao_prescritos as
+select r.nome,c.datacons from tratamento right outer join remediosprodutos r using(idremedioproduto)  left outer join consulta c using(idconsulta)
+where datacons is null
+
